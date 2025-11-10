@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Demo Screen</string>
+    <string name="feature_1">Ai on Your Keyboard</string>
+    <string name="feature_2">Smart Auto Reply</string>
+    <string name="feature_3">Seamless AI Voice-to-Text</string>
+    <string name="feature_4">Instant Tone Shift &amp; Rewriter</string>
+    <string name="feature_5">Flawless Grammar &amp; Spell Fix</string>
+    <string name="feature_6">Multi-Language Translation</string>
+    <string name="feature_7">Ad-Free Experience</string>
 </resources>

@@ -54,6 +54,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
@@ -64,7 +65,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.demoscreen.ui.theme.BottomArcShape
+import com.example.demoscreen.BottomArcShape
 
 @Composable
 fun UpgradeToPremiumScreen() {
@@ -177,13 +178,13 @@ fun UpgradeToPremiumScreen() {
                     Column(Modifier.padding(16.dp)) {
                         // 🧩 Feature list with individual icons
                         val features = listOf(
-                            "Ai on Your Keyboard" to R.drawable.ic_feature_1,
-                            "Smart Auto Reply" to R.drawable.ic_feature_2,
-                            "Seamless AI Voice-to-Text" to R.drawable.ic_feature_3,
-                            "Instant Tone Shift & Rewriter" to R.drawable.ic_feature_4,
-                            "Flawless Grammar & Spell Fix" to R.drawable.ic_feature_5,
-                            "Multi-Language Translation" to R.drawable.ic_feature_6,
-                            "Ad-Free Experience" to R.drawable.ic_feature_7
+                            stringResource(R.string.feature_1) to R.drawable.ic_feature_1,
+                            stringResource(R.string.feature_2) to R.drawable.ic_feature_2,
+                            stringResource(R.string.feature_3) to R.drawable.ic_feature_3,
+                            stringResource(R.string.feature_4) to R.drawable.ic_feature_4,
+                            stringResource(R.string.feature_5) to R.drawable.ic_feature_5,
+                            stringResource(R.string.feature_6) to R.drawable.ic_feature_6,
+                            stringResource(R.string.feature_7) to R.drawable.ic_feature_7
                         )
 
                         features.forEach { (feature, iconRes) ->
