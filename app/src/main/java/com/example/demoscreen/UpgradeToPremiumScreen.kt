@@ -4,12 +4,10 @@ package com.example.demoscreen
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -20,22 +18,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,36 +42,34 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.demoscreen.BottomArcShape
 
 @Composable
 fun UpgradeToPremiumScreen() {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val screenHeightDp = configuration.screenHeightDp.dp
-    val topBoxHeight = if (isLandscape) (screenHeightDp * 0.50f) else screenHeightDp*0.25f
+    val topBoxHeight = if (isLandscape) (screenHeightDp * 0.50f) else screenHeightDp * 0.25f
 
     val gradient = Brush.linearGradient(
-        colors = listOf(Color(0xFF695AF7), Color(0xFFCF56C9))
+        colors = listOf(
+            colorResource(id = R.color.gradient_start),
+            colorResource(id = R.color.gradient_end)
+        )
     )
 
     var selectedPlan by remember { mutableStateOf("yearly") }
@@ -148,403 +142,120 @@ fun UpgradeToPremiumScreen() {
 
                 // 📝 Title text
                 Text(
-                    text = "Upgrade to premium",
+                    text = stringResource(R.string.upgrade_screen_title),
                     color = Color.White,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
 
 
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(10.dp))
 
             // ✅ Content padding below header
-            Column(
+            FeatureCard(
+                isLandscape = false,
+                extraContent = { RatingWithAvatars() }
+            )
+
+            Spacer(Modifier.height(20.dp))
+
+            // Plans
+            PlanOption(
+                title = "Monthly Plan",
+                price = "$4.99",
+                selected = selectedPlan == "monthly",
+                onSelect = { selectedPlan = "monthly" }
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            PlanOption(
+                title = "Yearly Plan",
+                price = "$29.90",
+                tag = "Popular",
+                offer = "50% OFF",
+                selected = selectedPlan == "yearly",
+                onSelect = { selectedPlan = "yearly" }
+            )
+
+
+            Spacer(Modifier.height(20.dp))
+
+            // Upgrade Button
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 24.dp)
+                    .height(54.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(brush = gradient),
+                contentAlignment = Alignment.Center
             ) {
-                // Feature list
-                Card(
-                    modifier = Modifier.fillMaxWidth()
-                        .shadow(elevation = 4.dp, shape = RoundedCornerShape(16.dp)),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
+                Button(
+                    onClick = { /* handle upgrade */ },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent, // use transparent to show gradient
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(54.dp),
+                    shape = RoundedCornerShape(18.dp),
+                    contentPadding = PaddingValues(0.dp) // remove default inner padding
                 ) {
-                    Column(Modifier.padding(16.dp)) {
-                        // 🧩 Feature list with individual icons
-                        val features = listOf(
-                            stringResource(R.string.feature_1) to R.drawable.ic_feature_1,
-                            stringResource(R.string.feature_2) to R.drawable.ic_feature_2,
-                            stringResource(R.string.feature_3) to R.drawable.ic_feature_3,
-                            stringResource(R.string.feature_4) to R.drawable.ic_feature_4,
-                            stringResource(R.string.feature_5) to R.drawable.ic_feature_5,
-                            stringResource(R.string.feature_6) to R.drawable.ic_feature_6,
-                            stringResource(R.string.feature_7) to R.drawable.ic_feature_7
-                        )
-
-                        features.forEach { (feature, iconRes) ->
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 6.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(24.dp)
-                                        .clip(CircleShape),
-//                                        .background(Color(0xFF8A3FFC).copy(alpha = 0.15f)),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = iconRes),
-                                        contentDescription = feature,
-                                        tint = Color.Unspecified, // Important!
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-
-                                Spacer(Modifier.width(10.dp))
-
-                                Text(
-                                    text = feature,
-                                    fontSize = 14.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat_medium)),
-                                    color = Color(0xFF374151)
-                                )
-                            }
-                        }
-                    }
-                    val avatarBackgrounds = listOf(
-                        Color(0xFFE0E0E0),
-                        Color(0xFFD6E2C0),
-                        Color(0xFFFFECB3),
-                        Color(0xFFBBDEFB)
-                    )
-                    // Four different avatar drawables
-                    val avatars = listOf(
-                        R.drawable.img_user_1,
-                        R.drawable.img_user_2,
-                        R.drawable.img_user_3,
-                        R.drawable.img_user_4
-                    )
                     Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 8.dp)
-                            .padding(vertical = 4.dp)
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        // ⭐ Rating Stars
-                        repeat(5) {
+                        Box(
+                            modifier = Modifier.size(24.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_feedback_star), // your star drawable
-                                contentDescription = "Star",
-                                tint = Color.Unspecified,
-                                modifier = Modifier.size(24.dp)
+                                painter = painterResource(id = R.drawable.ic_upgrade_btn),
+                                contentDescription = "Upgrade button icon",
+                                tint = Color.Unspecified, // Important!
+                                modifier = Modifier.size(22.dp)
                             )
-                        }
 
+                        }
                         Spacer(modifier = Modifier.width(8.dp))
-
-                        // 👤 Overlapping Avatars
-                        Box {
-                            avatars.forEachIndexed { index, avatarRes ->
-                                Box(
-                                    modifier = Modifier
-                                        .size(36.dp)
-                                        .offset(x = (index * 24).dp) // overlap
-                                        .clip(CircleShape)
-                                        .background(avatarBackgrounds[index])
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = avatarRes),
-                                        contentDescription = "Avatar $index",
-                                        modifier = Modifier
-                                            .size(32.dp)
-                                            .align(Alignment.Center)
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-
-                }
-
-                Spacer(Modifier.height(20.dp))
-
-                // Plans
-                PlanOption(
-                    title = "Monthly Plan",
-                    price = "$4.99",
-                    selected = selectedPlan == "monthly",
-                    onSelect = { selectedPlan = "monthly" }
-                )
-
-                Spacer(Modifier.height(12.dp))
-
-                PlanOption(
-                    title = "Yearly Plan",
-                    price = "$29.90",
-                    tag = "Popular",
-                    offer = "50% OFF",
-                    selected = selectedPlan == "yearly",
-                    onSelect = { selectedPlan = "yearly" }
-                )
-
-                Spacer(Modifier.height(20.dp))
-
-                // Upgrade Button
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                        .height(54.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(brush = gradient),
-                    contentAlignment = Alignment.Center
-                ) {
-                    ElevatedButton(
-                        onClick = { /* handle upgrade */ },
-                        colors = ButtonDefaults.elevatedButtonColors(
-                            containerColor = Color.Transparent, // use transparent to show gradient
-                            contentColor = Color.White
-                        ),
-                        elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 0.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(54.dp),
-                        shape = RoundedCornerShape(18.dp),
-                        contentPadding = PaddingValues(0.dp) // remove default inner padding
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Box(
-                                modifier = Modifier.size(24.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_upgrade_btn),
-                                    contentDescription = "Upgrade button icon",
-                                    tint = Color.Unspecified, // Important!
-                                    modifier = Modifier.size(22.dp)
-                                )
-
-                            }
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = "Upgrade Now",
-                                fontSize = 16.sp,
-                                textAlign = TextAlign.Center,
-                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                                color = Color.White
-                            )
-                        }
-
-                    }
-                }
-
-
-                Spacer(Modifier.height(16.dp))
-
-                Text(
-                    text = "Recurrent billing. Cancel anytime in Google Play.\nYou will be charged at purchase confirmation.",
-                    color = Color(0xFF616161),
-                    fontSize = 11.sp,
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                    modifier = Modifier.fillMaxWidth(),
-                    lineHeight = 16.sp
-                )
-
-                Spacer(Modifier.height(10.dp))
-            }
-        }
-    }
-
-
-
-@Composable
-fun PlanOption(
-    title: String,
-    price: String,
-    tag: String? = null,
-    offer: String? = null,
-    selected: Boolean,
-    onSelect: () -> Unit
-) {
-    val gradientBrush = Brush.linearGradient(
-        colors = listOf(
-            Color(0xFF695AF7),
-            Color(0xFFCF56C9)
-        )
-    )
-// Border
-    val borderBrush = if (selected) gradientBrush else SolidColor(Color(0xFFFFFFFF))
-
-// Text color (use gradient when selected)
-    val textColorBrush = if (selected) gradientBrush else SolidColor(Color.Black)
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Wrap card and discount badge in BoxWithConstraints
-        BoxWithConstraints(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        ) {
-            // responsive tag sizing
-            val tagWidth = maxWidth * 0.20f
-            val tagHeight = tagWidth * 0.25f
-
-            // clamp max size to prevent overlap
-            val finalTagWidth = tagWidth.coerceAtMost(80.dp)
-            val finalTagHeight = tagHeight.coerceAtMost(20.dp)
-
-            // Inner Box allows align()
-            Box(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                // --- Main Card ---
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                        .border(1.dp, borderBrush, RoundedCornerShape(16.dp))
-                        .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }){
-                            onSelect()
-                        },
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.SpaceBetween,
-                        horizontalAlignment = Alignment.Start
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 4.dp, vertical = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CustomRadioButton(
-                                selected = selected,
-                                onClick = onSelect,
-                                selectedIcon = R.drawable.ic_selected_radio_btn,
-                                unselectedIcon = R.drawable.ic_unselected_radio_btn
-                            )
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            Text(
-                                text = buildAnnotatedString {
-                                    withStyle(
-                                        style = SpanStyle(brush = textColorBrush)
-                                    ) { append(title) }
-                                },
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Medium,
-                                textAlign = TextAlign.Justify,
-                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                modifier = Modifier.weight(0.3f)
-                            )
-
-                            if (tag != null) {
-                                Text(
-                                    text = tag,
-                                    color = Color.Black,
-                                    fontSize = 10.sp,
-                                    textAlign = TextAlign.Center,
-                                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                                    modifier = Modifier
-                                        .background(Color(0xFFFFE814), shape = RoundedCornerShape(16.dp))
-                                        .padding(horizontal = 4.dp, vertical = 4.dp)
-                                        .weight(0.20f)
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            Text(
-                                text = price,
-                                fontSize = 16.sp,
-                                color = Color(0xFF364255),
-                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                                modifier = Modifier
-                                    .padding(end = 8.dp)
-                            )
-                        }
-                    }
-                }
-
-                // --- Discount Tag (only if available) ---
-                if (offer != null) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentSize(Alignment.TopEnd)
-                    ) {
-                        DiscountTag(
-                            text = offer,
-                            modifier = Modifier
-                                .offset(
-                                    // offset proportionally to width but not too far
-                                    x = (-finalTagWidth * 0.42f),
-                                    y = finalTagHeight * 0.0f
-                                )
-                                .width(finalTagWidth)
-                                .height(finalTagHeight)
+                        Text(
+                            text = stringResource(R.string.upgrade_screen_btn_label),
+                            fontSize = 16.sp,
+                            textAlign = TextAlign.Center,
+                            fontFamily = FontFamily(Font(R.font.montserrat_semi_bold)),
+                            color = Color.White
                         )
                     }
+
                 }
             }
+
+
+            Spacer(Modifier.height(10.dp))
+
+            Text(
+                text = stringResource(R.string.upgrade_screen_billing_description),
+                color = Color(0xFF616161),
+                fontSize = 11.sp,
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                modifier = Modifier.fillMaxWidth(),
+                lineHeight = 16.sp
+            )
+
+            Spacer(Modifier.height(10.dp))
         }
-
-    }
-
-
-}
-
-@Composable
-fun CustomRadioButton(
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    selectedIcon: Int = R.drawable.ic_selected_radio_btn,
-    unselectedIcon: Int = R.drawable.ic_unselected_radio_btn,
-    contentDescription: String? = null
-) {
-    IconButton(
-        onClick = onClick,
-        modifier = modifier.size(24.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = if (selected) selectedIcon else unselectedIcon),
-            contentDescription = contentDescription,
-            tint = Color.Unspecified // keeps original icon color
-        )
     }
 }
 

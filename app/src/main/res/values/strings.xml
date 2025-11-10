@@ -7,4 +7,14 @@
     <string name="feature_5">Flawless Grammar &amp; Spell Fix</string>
     <string name="feature_6">Multi-Language Translation</string>
     <string name="feature_7">Ad-Free Experience</string>
+    <string name="upgrade_screen_title">Upgrade to premium</string>
+    <string name="upgrade_screen_btn_label">Upgrade Now</string>
+    <string name="upgrade_screen_billing_description">Recurrent billing. Cancel anytime in Google Play.\nYou will be charged at purchase confirmation.</string>
+    <string name="free_trial_screen_title">Try Premium for Free</string>
+    <string name="free_trial_screen_btn_label">Start Free Trial</string>
+    <string name="free_trial_screen_billing_description">Recurrent billing. Cancel anytime. You will be\ncharged after trial ends unless canceled.</string>
+    <string name="trial_notice_text">FREE 7-day trial, then USD \$29.90/year.</string>
+    <string name="unlock_premium_screen_title">Unlock Premium</string>
+    <string name="unlock_premium_screen_btn_label">Continue</string>
+    <string name="unlock_premium_screen_billing_description">Recurrent billing. Cancel anytime. You will be\ncharged after trial ends unless canceled.</string>
 </resources>

@@ -21,6 +21,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
@@ -36,7 +37,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -62,7 +65,17 @@ fun FreeTrialScreen() {
 
 
     val gradient = Brush.linearGradient(
-        colors = listOf(Color(0xFF695AF7), Color(0xFFCF56C9))
+        colors = listOf(
+            colorResource(id = R.color.gradient_start),
+            colorResource(id = R.color.gradient_end)
+        )
+    )
+
+    val gradientTop = Brush.linearGradient(
+        colors = listOf(
+            colorResource(id = R.color.gradient_start).copy(alpha = 0.9f),
+            colorResource(id = R.color.gradient_end).copy(alpha = 0.9f)
+        )
     )
 
     Surface(
@@ -96,9 +109,7 @@ fun FreeTrialScreen() {
                     modifier = Modifier
                         .matchParentSize()
                         .background(
-                            Brush.linearGradient(
-                                listOf(Color(0xE5695AF7), Color(0xF0CF56C9))
-                            )
+                            gradientTop
                         )
                 ) {
 
@@ -136,7 +147,7 @@ fun FreeTrialScreen() {
                             modifier = Modifier.size(48.dp)
                         )
                         Text(
-                            text = "Try Premium for Free",
+                            text = stringResource(R.string.free_trial_screen_title),
                             color = Color.Yellow,
                             fontSize = 24.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat_bold)),
@@ -162,12 +173,12 @@ fun FreeTrialScreen() {
                     .fillMaxWidth()
                     // Removed align(Alignment.BottomCenter)
                     .background(Color.White)
-                    .padding(horizontal = 24.dp, vertical = 28.dp),
+                    .padding(horizontal = 20.dp, vertical = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top // Changed from Arrangement.Bottom
             ) {
                 Text(
-                    text = "FREE 7-day trial, then USD \$29.90/year.",
+                    text = stringResource(R.string.trial_notice_text),
                     color = Color(0xFF616161),
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
@@ -185,13 +196,12 @@ fun FreeTrialScreen() {
                         .background(gradient),
                     contentAlignment = Alignment.Center
                 ) {
-                    ElevatedButton(
+                    Button(
                         onClick = { /* handle upgrade */ },
-                        colors = ButtonDefaults.elevatedButtonColors(
+                        colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent,
                             contentColor = Color.White
                         ),
-                        elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 0.dp),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(54.dp),
@@ -200,16 +210,16 @@ fun FreeTrialScreen() {
                     ) {
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .fillMaxSize()
                                 .padding(horizontal = 10.dp, vertical = 16.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
                             Text(
-                                text = "Start Free Trial",
+                                text = stringResource(R.string.free_trial_screen_btn_label),
                                 fontSize = 16.sp,
                                 textAlign = TextAlign.Center,
-                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                                fontFamily = FontFamily(Font(R.font.montserrat_semi_bold)),
                                 color = Color.White
                             )
                         }
@@ -226,7 +236,7 @@ fun FreeTrialScreen() {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Recurrent billing. Cancel anytime. You will be\ncharged after trial ends unless canceled.",
+                        text = stringResource(R.string.free_trial_screen_billing_description),
                         color = Color(0xFF616161),
                         fontSize = 11.sp,
                         textAlign = TextAlign.Center,
