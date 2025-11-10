@@ -1,4 +1,4 @@
-package com.example.demoscreen.ui.theme
+package com.example.demoscreen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,7 +29,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.example.demoscreen.R
 
 @Composable
 fun FeatureCard(
@@ -54,13 +54,13 @@ fun FeatureCard(
         ) {
             Column(Modifier.padding(16.dp)) {
                 val features = listOf(
-                    "AI on Your Keyboard" to R.drawable.ic_feature_1,
-                    "Smart Auto Reply" to R.drawable.ic_feature_2,
-                    "Seamless AI Voice-to-Text" to R.drawable.ic_feature_3,
-                    "Instant Tone Shift & Rewriter" to R.drawable.ic_feature_4,
-                    "Flawless Grammar & Spell Fix" to R.drawable.ic_feature_5,
-                    "Multi-Language Translation" to R.drawable.ic_feature_6,
-                    "Ad-Free Experience" to R.drawable.ic_feature_7
+                    stringResource(R.string.feature_1) to R.drawable.ic_feature_1,
+                    stringResource(R.string.feature_2) to R.drawable.ic_feature_2,
+                    stringResource(R.string.feature_3) to R.drawable.ic_feature_3,
+                    stringResource(R.string.feature_4) to R.drawable.ic_feature_4,
+                    stringResource(R.string.feature_5) to R.drawable.ic_feature_5,
+                    stringResource(R.string.feature_6) to R.drawable.ic_feature_6,
+                    stringResource(R.string.feature_7) to R.drawable.ic_feature_7
                 )
 
                 features.forEach { (feature, iconRes) ->

@@ -1,11 +1,11 @@
-package com.example.demoscreen.ui.theme
+package com.example.demoscreen
 
-import android.util.LayoutDirection
-import android.util.Size
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import kotlin.math.min
 
@@ -14,8 +14,8 @@ class BottomArcShape(
 ) : Shape {
 
     override fun createOutline(
-        size: androidx.compose.ui.geometry.Size,
-        layoutDirection: androidx.compose.ui.unit.LayoutDirection,
+        size: Size,
+        layoutDirection: LayoutDirection,
         density: Density
     ): Outline {
         val arcHeightPx = with(density) { arcHeightDp.dp.toPx() }
