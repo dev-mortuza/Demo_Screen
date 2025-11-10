@@ -1,7 +1,6 @@
 package com.example.demoscreen
 
 
-import android.R.attr.textColor
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +36,6 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,11 +46,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -181,7 +177,7 @@ fun UpgradeToPremiumScreen() {
                     Column(Modifier.padding(16.dp)) {
                         // 🧩 Feature list with individual icons
                         val features = listOf(
-                            "AI on Your Keyboard" to R.drawable.ic_feature_1,
+                            "Ai on Your Keyboard" to R.drawable.ic_feature_1,
                             "Smart Auto Reply" to R.drawable.ic_feature_2,
                             "Seamless AI Voice-to-Text" to R.drawable.ic_feature_3,
                             "Instant Tone Shift & Rewriter" to R.drawable.ic_feature_4,
@@ -238,10 +234,11 @@ fun UpgradeToPremiumScreen() {
                     )
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 40.dp, vertical = 4.dp)
+                            .padding(end = 8.dp)
+                            .padding(vertical = 4.dp)
                     ) {
                         // ⭐ Rating Stars
                         repeat(5) {
@@ -483,7 +480,7 @@ fun PlanOption(
                                     modifier = Modifier
                                         .background(Color(0xFFFFE814), shape = RoundedCornerShape(16.dp))
                                         .padding(horizontal = 4.dp, vertical = 4.dp)
-                                        .weight(0.17f)
+                                        .weight(0.20f)
                                 )
                             }
 
@@ -508,7 +505,7 @@ fun PlanOption(
                             .fillMaxWidth()
                             .wrapContentSize(Alignment.TopEnd)
                     ) {
-                        DiscountTagApprox(
+                        DiscountTag(
                             text = offer,
                             modifier = Modifier
                                 .offset(

@@ -3,7 +3,6 @@ package com.example.demoscreen
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -25,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun DiscountTagApprox(
+fun DiscountTag(
     text: String = "50% OFF",
     modifier: Modifier = Modifier
 ) {
@@ -35,11 +34,11 @@ fun DiscountTagApprox(
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val w = size.width
-            val h = size.height
+            val h = size.height*.70f
 
             val bottomW = w * 0.6f
             val sideInset = (w - bottomW) / 1.5f
-            val topRadius = h * 0.10f
+            val topRadius = h * 0.08f
 
             val path = Path().apply {
                 moveTo(topRadius, 0f)
@@ -59,7 +58,7 @@ fun DiscountTagApprox(
                 )
             )
 
-            val r = 1.dp.toPx()
+            val r = 2.dp.toPx()
             val gap = r * 1.2f
 
             drawCircle(
@@ -109,7 +108,7 @@ fun DiscountTagPreview() {
             .background(Color(0xFFF4F4F4)),
         contentAlignment = Alignment.Center
     ) {
-        DiscountTagApprox(
+        DiscountTag(
             modifier = Modifier
                 .width(240.dp)
                 .height(70.dp)
