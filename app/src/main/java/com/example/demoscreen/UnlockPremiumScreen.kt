@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.example.demoscreen.ui.theme.FeatureCard
 
 @Composable
 fun UnlockPremiumScreen() {
@@ -150,60 +151,10 @@ fun UnlockPremiumScreen() {
             }
 
             // 💎 Floating Card Container (Achieves Overlap)
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .offset(y = -cardOverlapOffset) // ⬅️ Shift UP for overlap
-                    .zIndex(1f) // Ensure Card is on top
-                    .padding(horizontal = 0.dp), // Maintain width for Card's fillMaxWidth(0.9f)
-                contentAlignment = Alignment.TopCenter
-            ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth(if (isLandscape) 0.9f else 0.9f)
-                        .shadow(elevation = 8.dp, shape = RoundedCornerShape(16.dp))
-                        .clip(RoundedCornerShape(16.dp)),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                ) {
-                    Column(Modifier.padding(16.dp)) {
-                        val features = listOf(
-                            "Ai on Your Keyboard" to R.drawable.ic_feature_1,
-                            "Smart Auto Reply" to R.drawable.ic_feature_2,
-                            "Seamless AI Voice-to-Text" to R.drawable.ic_feature_3,
-                            "Instant Tone Shift & Rewriter" to R.drawable.ic_feature_4,
-                            "Flawless Grammar & Spell Fix" to R.drawable.ic_feature_5,
-                            "Multi-Language Translation" to R.drawable.ic_feature_6,
-                            "Ad-Free Experience" to R.drawable.ic_feature_7
-                        )
-
-                        features.forEach { (feature, iconRes) ->
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 6.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Box(modifier = Modifier.size(24.dp), contentAlignment = Alignment.Center){
-                                    Icon(
-                                        painter = painterResource(id = iconRes),
-                                        contentDescription = feature,
-                                        tint = Color.Unspecified,
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-                                Spacer(Modifier.width(10.dp))
-                                Text(
-                                    text = feature,
-                                    fontSize = 14.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat_medium)),
-                                    color = Color(0xFF374151)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+            FeatureCard(
+                isLandscape = false,
+                cardOverlapOffset = cardOverlapOffset
+            )
 
             // ⬇️ Compensation Spacer
             // This pushes the bottom content down, compensating for the card's upward offset.
