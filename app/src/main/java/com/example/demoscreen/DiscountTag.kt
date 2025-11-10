@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun DiscountTag(
-    text: String = "50% OFF",
+    text: String = "",
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -80,7 +80,7 @@ fun DiscountTag(
                 .padding(bottom = 0.dp) // reset
                 .offset(y = (-1).dp)    // base adjustment
                 .graphicsLayer {
-                    translationY = -1f // fine pixel correction for crisp rendering
+                    translationY = -3f // fine pixel correction for crisp rendering
                 },
             contentAlignment = Alignment.Center
         ) {
@@ -111,7 +111,8 @@ fun DiscountTagPreview() {
         DiscountTag(
             modifier = Modifier
                 .width(240.dp)
-                .height(70.dp)
+                .height(70.dp),
+            text = "50% OFF"
         )
     }
 }

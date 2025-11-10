@@ -19,9 +19,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DemoScreenTheme {
-//                UpgradeToPremiumScreen()
+                UpgradeToPremiumScreen()
 //                FreeTrialScreen()
-                UnlockPremiumScreen()
+//                UnlockPremiumScreen()
             }
         }
     }

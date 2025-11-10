@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,7 +35,8 @@ import androidx.compose.ui.zIndex
 fun FeatureCard(
     modifier: Modifier = Modifier,
     isLandscape: Boolean = false,
-    cardOverlapOffset: Dp = 0.dp
+    cardOverlapOffset: Dp = 0.dp,
+    extraContent: @Composable (() -> Unit)? = null // 🔹 optional slot
 ) {
     Box(
         modifier = modifier
@@ -89,6 +91,11 @@ fun FeatureCard(
                             color = Color(0xFF374151)
                         )
                     }
+                }
+                // 🔹 Optional extra content injected from parent
+                extraContent?.let {
+                    Spacer(Modifier.height(8.dp))
+                    it()
                 }
             }
         }
