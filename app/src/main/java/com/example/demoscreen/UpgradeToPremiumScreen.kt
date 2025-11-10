@@ -4,8 +4,6 @@ package com.example.demoscreen
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +25,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -50,16 +47,26 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.demoscreen.ui.theme.MontserratFontFamily
 
 @Composable
 fun UpgradeToPremiumScreen() {
+    UpgradeToPremiumScreenContent(
+        onCloseClick = {},
+        onUpgradeClick = {}
+    )
+}
+
+@Composable
+fun UpgradeToPremiumScreenContent(
+    onCloseClick: () -> Unit,
+    onUpgradeClick: () -> Unit
+) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val screenHeightDp = configuration.screenHeightDp.dp
@@ -79,7 +86,7 @@ fun UpgradeToPremiumScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF9F9F9))
-            .padding(WindowInsets.navigationBars.asPaddingValues()) // ⬅️ important
+            .padding(WindowInsets.navigationBars.asPaddingValues())
     ) {
         Column(
             modifier = Modifier
@@ -92,21 +99,18 @@ fun UpgradeToPremiumScreen() {
                     .fillMaxWidth()
                     .height(topBoxHeight)
                     .clip(BottomArcShape(arcHeightDp = 35f))
-//                    .clip(RoundedCornerShape(bottomStart = 97.dp, bottomEnd = 97.dp))
             ) {
                 // 🖼️ Background image
                 Image(
-                    painter = painterResource(id = R.drawable.header),
+                    painter = painterResource(id = R.drawable.img_header_box_background),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .matchParentSize()
-                        .graphicsLayer {
-                            translationY = -5f  // move image upward visually (negative = up)
-                        }
+                        .graphicsLayer { translationY = -5f }
                 )
 
-                // 🌈 Your main gradient overlay (unchanged)
+                // 🌈 Gradient overlay
                 Box(
                     modifier = Modifier
                         .matchParentSize()
@@ -119,9 +123,10 @@ fun UpgradeToPremiumScreen() {
                             )
                         )
                 )
-                // Close Button
+
+                // ❌ Close Button
                 IconButton(
-                    onClick = { /* close */ },
+                    onClick = onCloseClick,
                     modifier = Modifier
                         .padding(top = 55.dp, end = 24.dp)
                         .size(32.dp)
@@ -152,19 +157,16 @@ fun UpgradeToPremiumScreen() {
                 )
             }
 
-
-
             Spacer(Modifier.height(10.dp))
 
-            // ✅ Content padding below header
             FeatureCard(
                 isLandscape = false,
                 extraContent = { RatingWithAvatars() }
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(15.dp))
 
-            // Plans
+            // 📦 Plans
             PlanOption(
                 title = "Monthly Plan",
                 price = "$4.99",
@@ -172,7 +174,7 @@ fun UpgradeToPremiumScreen() {
                 onSelect = { selectedPlan = "monthly" }
             )
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(10.dp))
 
             PlanOption(
                 title = "Yearly Plan",
@@ -183,10 +185,9 @@ fun UpgradeToPremiumScreen() {
                 onSelect = { selectedPlan = "yearly" }
             )
 
+            Spacer(Modifier.height(15.dp))
 
-            Spacer(Modifier.height(20.dp))
-
-            // Upgrade Button
+            // 🚀 Upgrade Button
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -197,16 +198,16 @@ fun UpgradeToPremiumScreen() {
                 contentAlignment = Alignment.Center
             ) {
                 Button(
-                    onClick = { /* handle upgrade */ },
+                    onClick = onUpgradeClick,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent, // use transparent to show gradient
+                        containerColor = Color.Transparent,
                         contentColor = Color.White
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(54.dp),
                     shape = RoundedCornerShape(18.dp),
-                    contentPadding = PaddingValues(0.dp) // remove default inner padding
+                    contentPadding = PaddingValues(0.dp)
                 ) {
                     Row(
                         modifier = Modifier
@@ -219,45 +220,56 @@ fun UpgradeToPremiumScreen() {
                             modifier = Modifier.size(24.dp),
                             contentAlignment = Alignment.Center
                         ) {
-
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_upgrade_btn),
                                 contentDescription = "Upgrade button icon",
-                                tint = Color.Unspecified, // Important!
+                                tint = Color.Unspecified,
                                 modifier = Modifier.size(22.dp)
                             )
-
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = stringResource(R.string.upgrade_screen_btn_label),
-                            fontSize = 16.sp,
-                            textAlign = TextAlign.Center,
-                            fontFamily = FontFamily(Font(R.font.montserrat_semi_bold)),
-                            color = Color.White
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontSize = 16.sp,
+                                color = Color.White,
+                                fontFamily = MontserratFontFamily,
+                                fontWeight = FontWeight.SemiBold,
+                                textAlign = TextAlign.Center
+                            )
                         )
                     }
-
                 }
             }
 
-
             Spacer(Modifier.height(10.dp))
 
-            Text(
-                text = stringResource(R.string.upgrade_screen_billing_description),
-                color = Color(0xFF616161),
-                fontSize = 11.sp,
-                textAlign = TextAlign.Center,
-                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                modifier = Modifier.fillMaxWidth(),
-                lineHeight = 16.sp
-            )
+            // 🧾 Billing Description
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.upgrade_screen_billing_description),
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Normal,
+                        fontFamily = MontserratFontFamily,
+                        fontSize = 11.sp,
+                        color = Color.DarkGray,
+                        lineHeight = 16.sp,
+                        textAlign = TextAlign.Center
+                    )
+                )
+            }
 
             Spacer(Modifier.height(10.dp))
         }
     }
 }
+
 
 
 @Composable

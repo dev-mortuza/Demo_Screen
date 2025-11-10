@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -22,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.demoscreen.ui.theme.MontserratFontFamily
 
 @Composable
 fun DiscountTag(
@@ -29,7 +33,7 @@ fun DiscountTag(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier,
+        modifier = modifier.clip(RoundedCornerShape(3.dp)),
         contentAlignment = Alignment.Center
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
@@ -38,7 +42,7 @@ fun DiscountTag(
 
             val bottomW = w * 0.6f
             val sideInset = (w - bottomW) / 1.5f
-            val topRadius = h * 0.08f
+            val topRadius = h * 0.080f
 
             val path = Path().apply {
                 moveTo(topRadius, 0f)
@@ -80,15 +84,16 @@ fun DiscountTag(
                 .padding(bottom = 0.dp) // reset
                 .offset(y = (-1).dp)    // base adjustment
                 .graphicsLayer {
-                    translationY = -3f // fine pixel correction for crisp rendering
+                    translationY = -4f // fine pixel correction for crisp rendering
                 },
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = text,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontWeight = FontWeight.Normal,
                 fontSize = 8.sp,
+                fontFamily = MontserratFontFamily,
                 textAlign = TextAlign.Center,
                 lineHeight = 8.sp
             )

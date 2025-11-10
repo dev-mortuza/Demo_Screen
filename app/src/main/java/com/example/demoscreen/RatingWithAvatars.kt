@@ -58,7 +58,7 @@ fun RatingWithAvatars(
                 painter = painterResource(id = starIcon),
                 contentDescription = "Star",
                 tint = Color.Unspecified,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(18.dp)
             )
         }
 
